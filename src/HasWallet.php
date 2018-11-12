@@ -49,11 +49,11 @@ trait HasWallet
         if ($accepted) {
             $this->wallet->balance += $amount;
             $this->wallet->save();
-        } elseif (! $this->wallet->exists) {
+        } elseif (!$this->wallet->exists) {
             $this->wallet->save();
         }
 
-        $this->wallet->transactions()
+        return $this->wallet->transactions()
             ->create([
                 'amount' => $amount,
                 'hash' => uniqid('lwch_'),
@@ -71,7 +71,7 @@ trait HasWallet
      */
     public function failDeposit($amount, $type = 'deposit', $meta = [])
     {
-        $this->deposit($amount, $type, $meta, false);
+        return $this->deposit($amount, $type, $meta, false);
     }
 
     /**
@@ -88,11 +88,11 @@ trait HasWallet
         if ($accepted) {
             $this->wallet->balance -= $amount;
             $this->wallet->save();
-        } elseif (! $this->wallet->exists) {
+        } elseif (!$this->wallet->exists) {
             $this->wallet->save();
         }
 
-        $this->wallet->transactions()
+        return $this->wallet->transactions()
             ->create([
                 'amount' => $amount,
                 'hash' => uniqid('lwch_'),
